@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.12'
+}
+
+
+javafx {
+    version = "17.0.1"
+    modules = [ 'javafx.controls' , 'javafx.fxml']
+}
+
+version '1.0'
+
+mainClassName="ui.UiMaster"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+test {
+    useJUnitPlatform()
+}
