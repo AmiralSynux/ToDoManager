@@ -1,11 +1,13 @@
 package ui.controllers;
 
+import domain.RecentFile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import service.IService;
 import ui.components.ScenesHandler;
 
 import java.io.File;
@@ -16,9 +18,11 @@ public class MainProgramController {
     private ListView projectList;
 
     private Stage current;
+    private IService service;
 
-    public void init(Stage stage){
+    public void init(IService service, Stage stage){
         current = stage;
+        this.service = service;
     }
 
     @FXML
@@ -44,7 +48,7 @@ public class MainProgramController {
 
             return;
         }
-
+        service.addRecentFile(new RecentFile());
         current.setScene(ScenesHandler.getEditorScene(file));
     }
 

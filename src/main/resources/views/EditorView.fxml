@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane prefHeight="494.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.EditorController">
+<AnchorPane prefHeight="520.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.EditorController">
    <children>
-      <MenuBar layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="582.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" onAction="#createPressed" text="Create" />
-          <Menu mnemonicParsing="false" onAction="#savePressed" text="Save" />
-          <Menu mnemonicParsing="false" onAction="#helpPressed" text="Help" />
-        </menus>
-      </MenuBar>
-      <TextArea fx:id="textArea" layoutY="26.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" />
+      <TextArea fx:id="textArea" layoutY="28.0" prefHeight="492.0" prefWidth="582.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
+      <HBox layoutY="1.0" prefHeight="21.0" prefWidth="582.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#savePressed" text="Save" />
+            <Button mnemonicParsing="false" text="Build" />
+            <Button mnemonicParsing="false" text="Help" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

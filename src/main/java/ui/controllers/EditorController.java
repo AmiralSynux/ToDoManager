@@ -4,11 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
+import ui.components.AlertHelper;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.Scanner;
 
@@ -24,6 +22,7 @@ public class EditorController {
             this.file = file;
         } catch (IOException e) {
             e.printStackTrace();
+            AlertHelper.showError(e);
         }
 
     }
@@ -37,9 +36,16 @@ public class EditorController {
 
     @FXML
     private void savePressed() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"new project pressed", ButtonType.OK);
-        alert.setTitle("test");
-        alert.show();
+        try{
+            String currentText = textArea.getText();
+            FileWriter writer = new FileWriter(file);
+            writer.write(currentText);
+            writer.close();
+            AlertHelper.showNotify("Document Saved");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            AlertHelper.showError(e);
+        }
     }
 
     @FXML

@@ -2,6 +2,8 @@ package ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import service.IService;
+import service.Service;
 import ui.components.ScenesHandler;
 
 public class UiMaster extends Application {
@@ -10,7 +12,8 @@ public class UiMaster extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(ScenesHandler.getMainProgramScene(primaryStage));
+        IService service = new Service();
+        primaryStage.setScene(ScenesHandler.getMainProgramScene(service, primaryStage));
         primaryStage.setTitle("ToDo Manager");
         primaryStage.show();
     }
