@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.IService;
+import ui.components.RecentFileItem;
 import ui.components.ScenesHandler;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.io.File;
 public class MainProgramController {
 
     @FXML
-    private ListView projectList;
+    private ListView<RecentFileItem> projectList;
 
     private Stage current;
     private IService service;
@@ -23,13 +24,16 @@ public class MainProgramController {
     public void init(IService service, Stage stage){
         current = stage;
         this.service = service;
+        initList();
+    }
+
+    private void initList() {
+        projectList.getItems().clear();
+        service.getRecentFiles().forEach(file -> projectList.getItems().add(new RecentFileItem(file)));
     }
 
     @FXML
     private void newProjectPressed() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"new project pressed", ButtonType.OK);
-        alert.setTitle("test");
-        alert.show();
     }
 
     @FXML
@@ -48,8 +52,9 @@ public class MainProgramController {
 
             return;
         }
-        service.addRecentFile(new RecentFile());
-        current.setScene(ScenesHandler.getEditorScene(file));
+        service.addRecentFile(file);
+        //current.setScene(ScenesHandler.getEditorScene(file));
+        initList();
     }
 
     @FXML

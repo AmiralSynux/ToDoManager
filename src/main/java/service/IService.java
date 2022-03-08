@@ -2,7 +2,10 @@ package service;
 
 import domain.RecentFile;
 
-public interface IService {
-    public void addRecentFile(RecentFile file);
+import java.io.File;
+import java.util.List;
 
+public interface IService {
+    void addRecentFile(File file);
+    List<RecentFile> getRecentFiles();
 }
