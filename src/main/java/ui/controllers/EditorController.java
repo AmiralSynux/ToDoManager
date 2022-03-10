@@ -1,10 +1,13 @@
 package ui.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import ui.components.AlertHelper;
+import ui.components.ScenesHandler;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -14,12 +17,14 @@ public class EditorController {
     @FXML
     private TextArea textArea;
 
+    private Stage current;
     private File file;
-    public void init(File file){
+    public void init(File file, Stage stage){
         try {
             String text = Files.readString(file.toPath());
             textArea.setText(text);
             this.file = file;
+            this.current = stage;
         } catch (IOException e) {
             e.printStackTrace();
             AlertHelper.showError(e);
@@ -53,5 +58,9 @@ public class EditorController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION,"new project pressed", ButtonType.OK);
         alert.setTitle("test");
         alert.show();
+    }
+
+    public void openMainScreen() {
+        this.current.setScene(ScenesHandler.getMainProgramScene(current));
     }
 }

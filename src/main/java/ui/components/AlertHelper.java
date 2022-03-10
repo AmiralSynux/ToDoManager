@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Region;
 
+import java.util.Optional;
+
 public class AlertHelper {
     /**
      * shows an error
@@ -48,5 +50,21 @@ public class AlertHelper {
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    /**
+     * shows a confirmation dialog
+     * @param message - the message shown
+     * @return true, if the user pressed "Ok"
+     *         false otherwise
+     */
+    public static boolean confirmationDialog(String message){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,message,ButtonType.OK,ButtonType.CANCEL);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setHeaderText(null);
+        Optional<ButtonType> btn = alert.showAndWait();
+        if(btn.isPresent())
+            return btn.get() == ButtonType.OK;
+        return false;
     }
 }

@@ -12,6 +12,7 @@ import repo.IRepository;
 import repo.database.RecentFileRepo;
 import service.IService;
 import service.Service;
+import service.ServiceFactory;
 import ui.components.ScenesHandler;
 
 public class UiMaster extends Application {
@@ -39,8 +40,10 @@ public class UiMaster extends Application {
         SessionFactory sessionFactory = setUp();
         IRecentFileRepo fileRepo = new RecentFileRepo(sessionFactory,new TestValidator<>());
         IService service = new Service(fileRepo);
-        primaryStage.setScene(ScenesHandler.getMainProgramScene(service, primaryStage));
-        primaryStage.setTitle("ToDo Manager");
+        ServiceFactory serviceFactory = new ServiceFactory();
+        serviceFactory.setService(service);
+        primaryStage.setScene(ScenesHandler.getMainProgramScene(primaryStage));
+        primaryStage.setTitle(ScenesHandler.getMainTitle());
         primaryStage.show();
     }
 }

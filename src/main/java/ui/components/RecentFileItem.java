@@ -15,6 +15,10 @@ public class RecentFileItem extends VBox {
         build();
     }
 
+    public RecentFile getRecentFile(){
+        return file;
+    }
+
     private void build() {
         HBox fileName = getFileNameItem();
         HBox filePath = getFilePathItem();

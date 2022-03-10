@@ -5,15 +5,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.MainProgramController">
+<AnchorPane prefHeight="400.0" prefWidth="549.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.MainProgramController">
    <children>
       <ListView fx:id="projectList" layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="195.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="161.8" AnchorPane.topAnchor="15.0" />
-      <VBox alignment="CENTER" layoutX="259.0" layoutY="15.0" prefHeight="370.0" prefWidth="100.0" spacing="30.0" AnchorPane.rightAnchor="13.0">
+      <VBox alignment="CENTER" layoutX="259.0" layoutY="15.0" prefHeight="370.0" prefWidth="117.0" spacing="30.0" AnchorPane.rightAnchor="13.0">
          <children>
             <Button mnemonicParsing="false" onAction="#newProjectPressed" text="New Project" />
             <Button mnemonicParsing="false" onAction="#openProjectPressed" text="Open Project" />
-            <Button mnemonicParsing="false" onAction="#deleteProjectPress" text="Delete Project" />
+            <Button mnemonicParsing="false" onAction="#removeProjectFromListPress" text="Remove from List" />
+            <Button layoutX="15.0" layoutY="239.0" mnemonicParsing="false" onAction="#deleteProjectPress" text="Delete Project" />
          </children>
       </VBox>
    </children>

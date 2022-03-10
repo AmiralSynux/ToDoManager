@@ -11,7 +11,6 @@ import java.util.Random;
 public class Service implements IService{
 
     IRecentFileRepo fileRepo;
-
     public Service(IRecentFileRepo fileRepo){
         this.fileRepo = fileRepo;
     }
@@ -22,6 +21,10 @@ public class Service implements IService{
         if(fileRepo.fileExists(recentFile))
             return;
         fileRepo.save(recentFile);
+    }
+
+    public void removeRecentFile(RecentFile file){
+        fileRepo.delete(file.getId());
     }
 
     @Override

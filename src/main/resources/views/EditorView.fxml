@@ -13,6 +13,7 @@
             <Button mnemonicParsing="false" onAction="#savePressed" text="Save" />
             <Button mnemonicParsing="false" text="Build" />
             <Button mnemonicParsing="false" text="Help" />
+            <Button layoutX="104.0" layoutY="10.0" mnemonicParsing="false" onAction="#openMainScreen" text="Main Screen" />
          </children>
       </HBox>
    </children>
