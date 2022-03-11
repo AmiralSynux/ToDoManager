@@ -2,11 +2,9 @@ package service;
 
 import domain.RecentFile;
 import repo.IRecentFileRepo;
-import repo.IRepository;
 
 import java.io.File;
 import java.util.List;
-import java.util.Random;
 
 public class Service implements IService{
 
@@ -16,20 +14,32 @@ public class Service implements IService{
     }
 
     @Override
-    public void addRecentFile(File file) {
+    public RecentFile addRecentFile(File file) {
         RecentFile recentFile = new RecentFile(file);
-        if(fileRepo.fileExists(recentFile))
-            return;
-        fileRepo.save(recentFile);
+        RecentFile searchFile = fileRepo.searchFile(recentFile);
+        if(searchFile!=null)
+            return searchFile;
+        return fileRepo.save(recentFile);
     }
 
+    @Override
     public void removeRecentFile(RecentFile file){
         fileRepo.delete(file.getId());
     }
 
     @Override
+    public void updateFile(RecentFile file) {
+        fileRepo.update(file);
+    }
+
+    @Override
+    public List<RecentFile> getFilteredRecentFiles(String text) {
+        return fileRepo.getFilteredFilesOrderedByLastOpened(text);
+    }
+
+    @Override
     public List<RecentFile> getRecentFiles() {
-        return fileRepo.getAll();
+        return fileRepo.getFilesOrderedByLastOpened();
     }
 
 

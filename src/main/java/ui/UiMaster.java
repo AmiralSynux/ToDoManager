@@ -8,7 +8,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import repo.IRecentFileRepo;
-import repo.IRepository;
 import repo.database.RecentFileRepo;
 import service.IService;
 import service.Service;
@@ -19,6 +18,7 @@ public class UiMaster extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     private SessionFactory setUp(){
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -40,10 +40,8 @@ public class UiMaster extends Application {
         SessionFactory sessionFactory = setUp();
         IRecentFileRepo fileRepo = new RecentFileRepo(sessionFactory,new TestValidator<>());
         IService service = new Service(fileRepo);
-        ServiceFactory serviceFactory = new ServiceFactory();
-        serviceFactory.setService(service);
+        ServiceFactory.setService(service);
         primaryStage.setScene(ScenesHandler.getMainProgramScene(primaryStage));
-        primaryStage.setTitle(ScenesHandler.getMainTitle());
         primaryStage.show();
     }
 }

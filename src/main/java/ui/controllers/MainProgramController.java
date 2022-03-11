@@ -3,6 +3,7 @@ package ui.controllers;
 import domain.RecentFile;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -13,9 +14,12 @@ import ui.components.RecentFileItem;
 import ui.components.ScenesHandler;
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainProgramController {
 
+    @FXML
+    private TextField searchField;
     @FXML
     private ListView<RecentFileItem> projectList;
 
@@ -24,27 +28,66 @@ public class MainProgramController {
 
     public void init(Stage stage){
         current = stage;
+        stage.setTitle(ScenesHandler.getMainTitle());
         this.service = ServiceFactory.getService();
         initList();
+        setSearchField();
+    }
+
+    private void setSearchField() {
+        searchField.setOnKeyTyped(event -> {
+            initList();
+        });
     }
 
     private void initList() {
         projectList.getItems().clear();
-        service.getRecentFiles().forEach(file -> {
-            RecentFileItem recentFileItem = new RecentFileItem(file);
-            recentFileItem.setOnMouseClicked(event -> {
-                if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-                    current.setScene(ScenesHandler.getEditorScene(file.getFile(),current));
-                    current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
-                }
-            });
-            projectList.getItems().add(recentFileItem);
+        String text = searchField.getText();
+        if(text.isEmpty())
+            service.getRecentFiles().forEach(this::addFile);
+        else
+            service.getFilteredRecentFiles(text).forEach(this::addFile);
+    }
+
+    private void addFile(RecentFile file) {
+        RecentFileItem recentFileItem = new RecentFileItem(file);
+        recentFileItem.setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+                current.setScene(ScenesHandler.getEditorScene(file,current));
+                current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
+            }
         });
+        projectList.getItems().add(recentFileItem);
     }
 
     @FXML
     private void newProjectPressed() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Create Todo File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Todo files","*.todo");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setSelectedExtensionFilter(filter);
+        File file = fileChooser.showSaveDialog(current);
+        try {
+            if(file.createNewFile())
+                openEditor(file);
+            else
+                AlertHelper.showError("File already exists!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void openEditor(File file){
+        if(file == null) return;
+        RecentFile savedFile;
+        try {
+            savedFile = service.addRecentFile(file);
+        }catch (Exception e){
+            AlertHelper.showError(e);
+            return;
+        }
+        current.setScene(ScenesHandler.getEditorScene(savedFile, current));
     }
 
     @FXML
@@ -58,16 +101,7 @@ public class MainProgramController {
         fileChooser.setSelectedExtensionFilter(filter);
 
         File file = fileChooser.showOpenDialog(current);
-        if(file == null) return;
-        try {
-            service.addRecentFile(file);
-        }catch (Exception e){
-            AlertHelper.showError(e);
-            return;
-        }
-        current.setScene(ScenesHandler.getEditorScene(file, current));
-        current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
-
+        openEditor(file);
     }
 
     @FXML
@@ -114,4 +148,14 @@ public class MainProgramController {
 
     }
 
+    @FXML
+    private void renameProject() {
+        var items = projectList.getSelectionModel().getSelectedItems();
+        if(items.size()!=1){
+            AlertHelper.showError("Please select one file!");
+            return;
+        }
+        RecentFile file = items.get(0).getRecentFile();
+        AlertHelper.showNotify(file.getName() + " Selected;");
+    }
 }

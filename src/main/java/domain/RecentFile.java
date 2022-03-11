@@ -4,12 +4,14 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import java.io.File;
+import java.time.LocalDateTime;
 
 @javax.persistence.Entity
 public class RecentFile extends Entity{
     File file;
     String name;
     String path;
+    LocalDateTime lastOpened;
 
     public RecentFile(File file){
         this.file = file;
@@ -18,6 +20,14 @@ public class RecentFile extends Entity{
     }
 
     public RecentFile() {
+    }
+
+    public LocalDateTime getLastOpened() {
+        return lastOpened;
+    }
+
+    public void setLastOpened(LocalDateTime lastOpened) {
+        this.lastOpened = lastOpened;
     }
 
     public String getName() {

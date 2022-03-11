@@ -19,11 +19,29 @@ public class RecentFileRepo extends BaseDbRepo<Integer, RecentFile> implements I
     }
 
     @Override
-    public boolean fileExists(RecentFile recentFile) {
+    public RecentFile searchFile(RecentFile recentFile) {
         List<RecentFile> files = filterMany((session)-> session.createQuery("FROM RecentFile as rf where rf.name= :name and rf.path = :path", getClassType())
                 .setParameter("name",recentFile.getName())
                 .setParameter("path",recentFile.getPath())
                 .list());
-        return !files.isEmpty();
+        if(files.isEmpty())return null;
+        if(files.size()>1)throw new RuntimeException("Too many files found!");
+        return files.get(0);
+    }
+
+    @Override
+    public List<RecentFile> getFilesOrderedByLastOpened() {
+        return filterMany((session -> {
+            return session.createQuery("from RecentFile as rf order by rf.lastOpened desc ", getClassType()).list();
+        }));
+    }
+
+    @Override
+    public List<RecentFile> getFilteredFilesOrderedByLastOpened(String text) {
+        return filterMany((session -> {
+            return session.createQuery("from RecentFile as rf where rf.name like :name  order by rf.lastOpened desc ", getClassType())
+                    .setParameter("name","%"+text+"%")
+                    .list();
+        }));
     }
 }

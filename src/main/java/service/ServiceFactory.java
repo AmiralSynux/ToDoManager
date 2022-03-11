@@ -5,7 +5,7 @@ public class ServiceFactory {
     public static IService getService(){
         return service;
     }
-    public void setService(IService service){
+    public static void setService(IService service){
         ServiceFactory.service = service;
     }
 }

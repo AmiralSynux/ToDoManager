@@ -1,5 +1,6 @@
 package ui.components;
 
+import domain.RecentFile;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -26,7 +27,7 @@ public class ScenesHandler {
         }
     }
 
-    public static Scene getEditorScene(File file, Stage stage){
+    public static Scene getEditorScene(RecentFile file, Stage stage){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ScenesHandler.class.getResource("/views/EditorView.fxml"));

@@ -1,30 +1,37 @@
 package ui.controllers;
 
-import javafx.event.ActionEvent;
+import domain.RecentFile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import service.IService;
+import service.ServiceFactory;
 import ui.components.AlertHelper;
 import ui.components.ScenesHandler;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class EditorController {
     @FXML
     private TextArea textArea;
 
     private Stage current;
-    private File file;
-    public void init(File file, Stage stage){
+    private RecentFile file;
+    private IService service;
+    public void init(RecentFile file, Stage stage){
         try {
-            String text = Files.readString(file.toPath());
+            String text = Files.readString(file.getFile().toPath());
             textArea.setText(text);
+            file.setLastOpened(LocalDateTime.now());
+            service = ServiceFactory.getService();
+            service.updateFile(file);
             this.file = file;
             this.current = stage;
+            current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
         } catch (IOException e) {
             e.printStackTrace();
             AlertHelper.showError(e);
@@ -43,7 +50,7 @@ public class EditorController {
     private void savePressed() {
         try{
             String currentText = textArea.getText();
-            FileWriter writer = new FileWriter(file);
+            FileWriter writer = new FileWriter(file.getFile());
             writer.write(currentText);
             writer.close();
             AlertHelper.showNotify("Document Saved");

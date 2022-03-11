@@ -6,7 +6,10 @@ import java.io.File;
 import java.util.List;
 
 public interface IService {
-    void addRecentFile(File file);
+    RecentFile addRecentFile(File file);
     List<RecentFile> getRecentFiles();
     void removeRecentFile(RecentFile file);
+    void updateFile(RecentFile file);
+
+    List<RecentFile> getFilteredRecentFiles(String text);
 }
