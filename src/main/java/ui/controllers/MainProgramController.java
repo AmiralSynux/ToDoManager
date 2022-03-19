@@ -156,6 +156,10 @@ public class MainProgramController {
             return;
         }
         RecentFile file = items.get(0).getRecentFile();
-        AlertHelper.showNotify(file.getName() + " Selected;");
+        Stage stage = new Stage();
+        stage.setScene(ScenesHandler.getRenameScene(file,stage));
+        stage.setTitle("Renaming - " + file.getName());
+        stage.showAndWait();
+        initList();
     }
 }

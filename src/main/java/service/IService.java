@@ -10,6 +10,5 @@ public interface IService {
     List<RecentFile> getRecentFiles();
     void removeRecentFile(RecentFile file);
     void updateFile(RecentFile file);
-
     List<RecentFile> getFilteredRecentFiles(String text);
 }
