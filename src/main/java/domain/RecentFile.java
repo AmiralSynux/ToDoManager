@@ -1,8 +1,5 @@
 package domain;
 
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.Column;
 import java.io.File;
 import java.time.LocalDateTime;
 
