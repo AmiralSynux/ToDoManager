@@ -11,7 +11,7 @@
       <HBox layoutY="1.0" prefHeight="21.0" prefWidth="582.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button mnemonicParsing="false" onAction="#savePressed" text="Save" />
-            <Button mnemonicParsing="false" text="Build" />
+            <Button mnemonicParsing="false" onAction="#buildPressed" text="Build" />
             <Button mnemonicParsing="false" text="Help" />
             <Button layoutX="104.0" layoutY="10.0" mnemonicParsing="false" onAction="#openMainScreen" text="Main Screen" />
          </children>

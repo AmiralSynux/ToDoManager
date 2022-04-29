@@ -38,6 +38,11 @@ public class Service implements IService{
     }
 
     @Override
+    public void parse(String recentText) {
+
+    }
+
+    @Override
     public List<RecentFile> getRecentFiles() {
         return fileRepo.getFilesOrderedByLastOpened();
     }

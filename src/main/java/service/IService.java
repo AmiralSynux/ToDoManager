@@ -11,4 +11,6 @@ public interface IService {
     void removeRecentFile(RecentFile file);
     void updateFile(RecentFile file);
     List<RecentFile> getFilteredRecentFiles(String text);
+
+    void parse(String recentText);
 }
