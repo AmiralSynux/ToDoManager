@@ -1,7 +1,6 @@
 package ui.controllers;
 
 import domain.RecentFile;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -33,7 +32,6 @@ public class EditorController {
             this.file = file;
             this.current = stage;
             current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
-            textArea.setOnKeyTyped();
         } catch (IOException e) {
             e.printStackTrace();
             AlertHelper.showError(e);
