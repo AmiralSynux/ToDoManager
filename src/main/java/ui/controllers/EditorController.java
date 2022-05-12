@@ -1,6 +1,7 @@
 package ui.controllers;
 
 import domain.RecentFile;
+import domain.TodoTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -14,6 +15,7 @@ import ui.components.ScenesHandler;
 import java.io.*;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EditorController {
     @FXML
@@ -87,9 +89,10 @@ public class EditorController {
             }
         }
         try{
-            service.parse(recentText);
+            List<TodoTask> taskList = service.interpret(file.getFile());
+            for (TodoTask task : taskList)
+                System.out.println(task);
         }catch (Exception e){
-            System.out.println(e.getMessage());
             AlertHelper.showError(e);
         }
     }

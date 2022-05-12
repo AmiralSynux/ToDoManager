@@ -1,6 +1,8 @@
 package service;
 
+import _parser.MyParser;
 import domain.RecentFile;
+import domain.TodoTask;
 import repo.IRecentFileRepo;
 
 import java.io.File;
@@ -38,8 +40,14 @@ public class Service implements IService{
     }
 
     @Override
-    public void parse(String recentText) {
-
+    public List<TodoTask> interpret(File file) {
+        MyParser parser = new MyParser(file);
+        try {
+            parser.parse();
+        }catch (Exception e){
+            throw new RuntimeException("Unable to interpret file!\n" + e.getMessage());
+        }
+        return parser.getTasks();
     }
 
     @Override

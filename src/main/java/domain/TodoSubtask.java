@@ -14,6 +14,11 @@ public class TodoSubtask {
         this.shouldRepeat = shouldRepeat;
     }
 
+    public TodoSubtask(){
+        shouldRepeat = true;
+        isActive = true;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -36,5 +41,12 @@ public class TodoSubtask {
 
     public void setShouldRepeat(boolean shouldRepeat) {
         this.shouldRepeat = shouldRepeat;
+    }
+
+    @Override
+    public String toString() {
+        return "TodoSubtask{" +
+                "description='" + description + '\'' +
+                '}';
     }
 }

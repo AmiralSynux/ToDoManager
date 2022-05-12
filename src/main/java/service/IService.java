@@ -1,6 +1,7 @@
 package service;
 
 import domain.RecentFile;
+import domain.TodoTask;
 
 import java.io.File;
 import java.util.List;
@@ -12,5 +13,5 @@ public interface IService {
     void updateFile(RecentFile file);
     List<RecentFile> getFilteredRecentFiles(String text);
 
-    void parse(String recentText);
+    List<TodoTask> interpret(File file);
 }

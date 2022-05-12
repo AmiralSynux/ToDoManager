@@ -1,6 +1,8 @@
 package domain;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TodoTask {
@@ -12,19 +14,23 @@ public class TodoTask {
 //    -	isActive
     private Integer id;
     private String description;
-    private LocalDateTime interval;
+    private Duration interval;
     // color>?
     private LocalDateTime startAt;
     private List<TodoSubtask> subtasks;
     private boolean isActive;
 
-    public TodoTask(Integer id, String description, LocalDateTime interval, LocalDateTime startAt, List<TodoSubtask> subtasks, boolean isActive) {
+    public TodoTask(Integer id, String description, Duration interval, LocalDateTime startAt, List<TodoSubtask> subtasks, boolean isActive) {
         this.id = id;
         this.description = description;
         this.interval = interval;
         this.startAt = startAt;
         this.subtasks = subtasks;
         this.isActive = isActive;
+    }
+
+    public TodoTask(){
+        isActive = true;
     }
 
     public Integer getId() {
@@ -43,11 +49,11 @@ public class TodoTask {
         this.description = description;
     }
 
-    public LocalDateTime getInterval() {
+    public Duration getInterval() {
         return interval;
     }
 
-    public void setInterval(LocalDateTime interval) {
+    public void setInterval(Duration interval) {
         this.interval = interval;
     }
 
@@ -73,5 +79,19 @@ public class TodoTask {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public String toString() {
+        String subst = "";
+        for(TodoSubtask subtask : subtasks)
+            subst += "- " + subtask + "\n";
+        return "TodoTask{" +
+                "description='" + description + '\'' +
+                ", interval=" + interval +
+                ", startAt=" + startAt +
+                ", isActive=" + isActive +
+                ", subtasks:\n" + subst +
+                '}';
     }
 }
