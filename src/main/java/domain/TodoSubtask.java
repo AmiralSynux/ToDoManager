@@ -1,6 +1,7 @@
 package domain;
 
-public class TodoSubtask {
+@javax.persistence.Entity
+public class TodoSubtask extends Entity{
 //    -	Descriere
 //     -	isActive
 //   -	Bool should repeat

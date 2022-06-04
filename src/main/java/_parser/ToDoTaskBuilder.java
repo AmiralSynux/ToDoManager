@@ -4,10 +4,7 @@ import domain.TodoSubtask;
 import domain.TodoTask;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 class ToDoTaskBuilder {
@@ -68,10 +65,10 @@ class ToDoTaskBuilder {
 
     public void repeat(String str){
         switch (str) {
-            case "daily" -> currentTask.setInterval(Duration.ofDays(1));
-            case "weekly" -> currentTask.setInterval(Duration.ofDays(7));
-            case "monthly" -> currentTask.setInterval(Duration.ofDays(30));
-            case "yearly" -> currentTask.setInterval(Duration.ofDays(364));
+            case "daily" -> currentTask.set_interval(Duration.ofDays(1));
+            case "weekly" -> currentTask.set_interval(Duration.ofDays(7));
+            case "monthly" -> currentTask.set_interval(Duration.ofDays(30));
+            case "yearly" -> currentTask.set_interval(Duration.ofDays(364));
         }
     }
 }

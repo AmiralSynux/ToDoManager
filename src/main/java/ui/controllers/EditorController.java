@@ -1,6 +1,7 @@
 package ui.controllers;
 
 import domain.RecentFile;
+import domain.TaskList;
 import domain.TodoTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -9,8 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import service.IService;
 import service.ServiceFactory;
-import ui.components.AlertHelper;
-import ui.components.ScenesHandler;
+import ui.helper.AlertHelper;
+import ui.helper.SceneHelper;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -33,7 +34,7 @@ public class EditorController {
             service.updateFile(file);
             this.file = file;
             this.current = stage;
-            current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
+            current.setTitle(SceneHelper.getMainTitle() + " - " + file.getName());
         } catch (IOException e) {
             e.printStackTrace();
             AlertHelper.showError(e);
@@ -74,7 +75,7 @@ public class EditorController {
     }
 
     public void openMainScreen() {
-        this.current.setScene(ScenesHandler.getMainProgramScene(current));
+        this.current.setScene(SceneHelper.getMainProgramScene(current));
     }
 
     public void buildPressed() {
@@ -90,8 +91,9 @@ public class EditorController {
         }
         try{
             List<TodoTask> taskList = service.interpret(file.getFile());
-            for (TodoTask task : taskList)
-                System.out.println(task);
+            TaskList list = new TaskList(file,taskList);
+            list = service.saveTaskList(list);
+            current.setScene(SceneHelper.getTaskListScene(list, current));
         }catch (Exception e){
             AlertHelper.showError(e);
         }

@@ -32,15 +32,16 @@ public abstract class BaseDbRepo<ID extends Serializable,E extends Entity> imple
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                System.out.println("Before save");
+                logger.trace("Before save");
                 session.save(entity);
-                System.out.println("After save");
+                logger.trace("After save");
                 tx.commit();
                 logger.traceExit();
                 return entity;
             } catch (RuntimeException ex) {
                 if (tx != null)
                     tx.rollback();
+                ex.printStackTrace();
                 logger.error(ex.getMessage());
             }
         }

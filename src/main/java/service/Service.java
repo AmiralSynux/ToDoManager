@@ -2,8 +2,13 @@ package service;
 
 import _parser.MyParser;
 import domain.RecentFile;
+import domain.TaskList;
+import domain.TodoSubtask;
 import domain.TodoTask;
 import repo.IRecentFileRepo;
+import repo.ITaskListRepo;
+import repo.ITodoSubtaskRepo;
+import repo.ITodoTaskRepo;
 
 import java.io.File;
 import java.util.List;
@@ -11,8 +16,17 @@ import java.util.List;
 public class Service implements IService{
 
     IRecentFileRepo fileRepo;
-    public Service(IRecentFileRepo fileRepo){
+    ITaskListRepo taskListRepo;
+    ITodoTaskRepo todoTaskRepo;
+    ITodoSubtaskRepo todoSubtaskRepo;
+    public Service(IRecentFileRepo fileRepo,
+                   ITaskListRepo taskListRepo,
+                   ITodoTaskRepo todoTaskRepo,
+                   ITodoSubtaskRepo todoSubtaskRepo){
         this.fileRepo = fileRepo;
+        this.taskListRepo = taskListRepo;
+        this.todoTaskRepo = todoTaskRepo;
+        this.todoSubtaskRepo = todoSubtaskRepo;
     }
 
     @Override
@@ -26,6 +40,9 @@ public class Service implements IService{
 
     @Override
     public void removeRecentFile(RecentFile file){
+        TaskList taskList = getTaskList(file);
+        if(taskList != null)
+            taskListRepo.delete(taskList.getId());
         fileRepo.delete(file.getId());
     }
 
@@ -48,6 +65,23 @@ public class Service implements IService{
             throw new RuntimeException("Unable to interpret file!\n" + e.getMessage());
         }
         return parser.getTasks();
+    }
+
+
+
+    @Override
+    public void complete(TaskList taskList) {
+
+    }
+
+    @Override
+    public TaskList saveTaskList(TaskList list) {
+        return taskListRepo.save(list);
+    }
+
+    @Override
+    public TaskList getTaskList(RecentFile file) {
+        return taskListRepo.searchTaskList(file.getId());
     }
 
     @Override

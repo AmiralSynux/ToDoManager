@@ -18,5 +18,8 @@
 
 
         <mapping class="domain.RecentFile"/>
+        <mapping class="domain.TodoTask"/>
+        <mapping class="domain.TodoSubtask"/>
+        <mapping class="domain.TaskList"/>
     </session-factory>
 </hibernate-configuration>

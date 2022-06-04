@@ -1,10 +1,8 @@
 package domain.validators;
 
-import domain.RecentFile;
-
-public class TestValidator<E> implements Validator<RecentFile> {
+public class TestValidator<E> implements Validator<E> {
     @Override
-    public void validate(RecentFile entity) {
+    public void validate(E entity) {
 
     }
 }

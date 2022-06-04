@@ -8,11 +8,17 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import repo.IRecentFileRepo;
+import repo.ITaskListRepo;
+import repo.ITodoSubtaskRepo;
+import repo.ITodoTaskRepo;
 import repo.database.RecentFileRepo;
+import repo.database.TaskListRepo;
+import repo.database.TodoSubtaskRepo;
+import repo.database.TodoTaskRepo;
 import service.IService;
 import service.Service;
 import service.ServiceFactory;
-import ui.components.ScenesHandler;
+import ui.helper.SceneHelper;
 
 public class UiMaster extends Application {
     public static void main(String[] args) {
@@ -39,9 +45,12 @@ public class UiMaster extends Application {
         System.out.println("Application starting");
         SessionFactory sessionFactory = setUp();
         IRecentFileRepo fileRepo = new RecentFileRepo(sessionFactory,new TestValidator<>());
-        IService service = new Service(fileRepo);
+        ITaskListRepo taskListRepo = new TaskListRepo(sessionFactory,new TestValidator<>());
+        ITodoTaskRepo todoTaskRepo = new TodoTaskRepo(sessionFactory,new TestValidator<>());
+        ITodoSubtaskRepo todoSubtaskRepo = new TodoSubtaskRepo(sessionFactory,new TestValidator<>());
+        IService service = new Service(fileRepo, taskListRepo, todoTaskRepo, todoSubtaskRepo);
         ServiceFactory.setService(service);
-        primaryStage.setScene(ScenesHandler.getMainProgramScene(primaryStage));
+        primaryStage.setScene(SceneHelper.getMainProgramScene(primaryStage));
         primaryStage.show();
     }
 }

@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import service.IService;
 import service.ServiceFactory;
-import ui.components.AlertHelper;
+import ui.helper.AlertHelper;
 
 import java.io.IOException;
 import java.nio.file.*;

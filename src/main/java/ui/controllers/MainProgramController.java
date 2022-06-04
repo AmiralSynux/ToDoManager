@@ -1,6 +1,7 @@
 package ui.controllers;
 
 import domain.RecentFile;
+import domain.TaskList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -9,9 +10,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.IService;
 import service.ServiceFactory;
-import ui.components.AlertHelper;
+import ui.helper.AlertHelper;
 import ui.components.RecentFileItem;
-import ui.components.ScenesHandler;
+import ui.helper.SceneHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class MainProgramController {
 
     public void init(Stage stage){
         current = stage;
-        stage.setTitle(ScenesHandler.getMainTitle());
+        stage.setTitle(SceneHelper.getMainTitle());
         this.service = ServiceFactory.getService();
         initList();
         setSearchField();
@@ -52,9 +53,19 @@ public class MainProgramController {
     private void addFile(RecentFile file) {
         RecentFileItem recentFileItem = new RecentFileItem(file);
         recentFileItem.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-                current.setScene(ScenesHandler.getEditorScene(file,current));
-                current.setTitle(ScenesHandler.getMainTitle() + " - " + file.getName());
+            try{
+                if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+                    TaskList taskList = service.getTaskList(file);
+                    if(taskList == null){
+                        current.setScene(SceneHelper.getEditorScene(file,current));
+                    }
+                    else{
+                        current.setScene(SceneHelper.getTaskListScene(taskList,current));
+                    }
+                    current.setTitle(SceneHelper.getMainTitle() + " - " + file.getName());
+                }
+            }catch (Exception e){
+                AlertHelper.showError(e);
             }
         });
         projectList.getItems().add(recentFileItem);
@@ -87,7 +98,7 @@ public class MainProgramController {
             AlertHelper.showError(e);
             return;
         }
-        current.setScene(ScenesHandler.getEditorScene(savedFile, current));
+        current.setScene(SceneHelper.getEditorScene(savedFile, current));
     }
 
     @FXML
@@ -157,7 +168,7 @@ public class MainProgramController {
         }
         RecentFile file = items.get(0).getRecentFile();
         Stage stage = new Stage();
-        stage.setScene(ScenesHandler.getRenameScene(file,stage));
+        stage.setScene(SceneHelper.getRenameScene(file,stage));
         stage.setTitle("Renaming - " + file.getName());
         stage.showAndWait();
         initList();
