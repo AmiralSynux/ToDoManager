@@ -5,10 +5,10 @@ import domain.RecentFile;
 import domain.TaskList;
 import domain.TodoSubtask;
 import domain.TodoTask;
-import repo.IRecentFileRepo;
-import repo.ITaskListRepo;
-import repo.ITodoSubtaskRepo;
-import repo.ITodoTaskRepo;
+import repository.IRecentFileRepo;
+import repository.ITaskListRepo;
+import repository.ITodoSubtaskRepo;
+import repository.ITodoTaskRepo;
 
 import java.io.File;
 import java.util.List;

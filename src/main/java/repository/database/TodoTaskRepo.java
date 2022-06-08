@@ -1,9 +1,9 @@
-package repo.database;
+package repository.database;
 
 import domain.TodoTask;
 import domain.validators.Validator;
 import org.hibernate.SessionFactory;
-import repo.ITodoTaskRepo;
+import repository.ITodoTaskRepo;
 
 public class TodoTaskRepo extends BaseDbRepo<Integer, TodoTask> implements ITodoTaskRepo {
     public TodoTaskRepo(SessionFactory sessionFactory, Validator<TodoTask> validator) {

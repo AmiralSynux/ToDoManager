@@ -7,23 +7,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import repo.IRecentFileRepo;
-import repo.ITaskListRepo;
-import repo.ITodoSubtaskRepo;
-import repo.ITodoTaskRepo;
-import repo.database.RecentFileRepo;
-import repo.database.TaskListRepo;
-import repo.database.TodoSubtaskRepo;
-import repo.database.TodoTaskRepo;
+import repository.IRecentFileRepo;
+import repository.ITaskListRepo;
+import repository.ITodoSubtaskRepo;
+import repository.ITodoTaskRepo;
+import repository.database.RecentFileRepo;
+import repository.database.TaskListRepo;
+import repository.database.TodoSubtaskRepo;
+import repository.database.TodoTaskRepo;
 import service.IService;
 import service.Service;
 import service.ServiceFactory;
 import ui.helper.SceneHelper;
 
 public class UiMaster extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     private SessionFactory setUp(){
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()

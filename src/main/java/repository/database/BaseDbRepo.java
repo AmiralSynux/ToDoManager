@@ -1,4 +1,4 @@
-package repo.database;
+package repository.database;
 
 import domain.Entity;
 import domain.validators.Validator;
@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import repo.IRepository;
+import repository.IRepository;
 
 import java.io.Serializable;
 import java.util.ArrayList;

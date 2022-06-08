@@ -48,13 +48,6 @@ public class EditorController {
     }
 
     @FXML
-    private void createPressed() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"new project pressed", ButtonType.OK);
-        alert.setTitle("test");
-        alert.show();
-    }
-
-    @FXML
     private void savePressed() {
         try{
             saveFile();

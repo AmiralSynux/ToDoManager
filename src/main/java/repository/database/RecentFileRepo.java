@@ -1,9 +1,9 @@
-package repo.database;
+package repository.database;
 
 import domain.RecentFile;
 import domain.validators.Validator;
 import org.hibernate.SessionFactory;
-import repo.IRecentFileRepo;
+import repository.IRecentFileRepo;
 
 import java.util.List;
 
