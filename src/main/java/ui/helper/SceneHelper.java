@@ -31,6 +31,7 @@ public class SceneHelper {
         }
     }
 
+
     public static Scene getMainProgramScene(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -47,20 +48,28 @@ public class SceneHelper {
     }
 
     public static Scene getEditorScene(RecentFile file, Stage stage){
+        return getEditorScene(null,file,stage);
+    }
+    public static Scene getEditorScene(TaskList taskList, Stage stage){
+        return getEditorScene(taskList,null,stage);
+    }
+    private static Scene getEditorScene(TaskList taskList, RecentFile file, Stage stage){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(SceneHelper.class.getResource("/views/EditorView.fxml"));
             Pane layout = loader.load();
             Scene scene = new Scene(layout);
             EditorController controller = loader.getController();
-            controller.init(file,stage);
+            if(taskList == null)
+                controller.init(file,stage);
+            else
+                controller.init(taskList,stage);
             return scene;
         }catch (Exception e){
             System.out.println(e.getMessage());
             throw new RuntimeException("Error while loading scene!");
         }
     }
-
     public static Scene getRenameScene(RecentFile file, Stage stage){
         try {
             FXMLLoader loader = new FXMLLoader();

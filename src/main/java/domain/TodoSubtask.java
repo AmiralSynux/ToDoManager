@@ -20,6 +20,11 @@ public class TodoSubtask extends Entity{
         isActive = true;
     }
 
+    public void refresh(){
+        if(shouldRepeat)
+            isActive = true;
+    }
+
     public String getDescription() {
         return description;
     }

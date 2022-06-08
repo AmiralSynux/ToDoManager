@@ -19,7 +19,7 @@ description ::= description words | words;
 words ::= Word:e {:MyParser.getBuilder().addDescription(e);:} | repeating;
 
 repeating ::= RepeatKeyword OneWordRepeat:r {:MyParser.getBuilder().repeat(r);:} |
-        RepeatKeyword RepeatEvery:r {:System.out.println("repeat " + r);:} |
+        RepeatKeyword RepeatEvery:r {:MyParser.getBuilder().repeatEvery(r);:} |
         StartAt:r {:System.out.println(r);:} |
         Postpone:r {:System.out.println(r);:};
 

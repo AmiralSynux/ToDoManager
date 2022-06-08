@@ -71,4 +71,24 @@ class ToDoTaskBuilder {
             case "yearly" -> currentTask.set_interval(Duration.ofDays(364));
         }
     }
+
+    public void repeatEvery(String str){
+        String[] words = str.split(" ");
+        String number = words[1];
+        String timestamp = words[2];
+        try{
+            long nr = Integer.parseInt(number);
+            switch (timestamp) {
+                //"hours" | "days" | "weeks" | "months" | "years"
+                case "hours" -> currentTask.set_interval(Duration.ofHours(nr));
+                case "days" -> currentTask.set_interval(Duration.ofDays(nr));
+                case "weeks" -> currentTask.set_interval(Duration.ofDays(nr*7));
+                case "months" -> currentTask.set_interval(Duration.ofDays(nr*30));
+                case "years" -> currentTask.set_interval(Duration.ofDays(nr*364));
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Can't parse '" + number + "'! Construction: " + str);
+        }
+
+    }
 }

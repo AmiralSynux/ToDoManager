@@ -21,6 +21,11 @@
                   <Font size="10.0" />
                </font>
             </Button>
+            <Button layoutX="41.0" layoutY="213.0" mnemonicParsing="false" onAction="#edit" prefHeight="24.0" prefWidth="86.0" text="Edit">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>

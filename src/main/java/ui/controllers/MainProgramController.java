@@ -80,6 +80,7 @@ public class MainProgramController {
         fileChooser.setSelectedExtensionFilter(filter);
         File file = fileChooser.showSaveDialog(current);
         try {
+            if(file == null)return;
             if(file.createNewFile())
                 openEditor(file);
             else

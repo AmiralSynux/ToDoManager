@@ -70,8 +70,9 @@ public class Service implements IService{
 
 
     @Override
-    public void complete(TaskList taskList) {
-
+    public void complete(TodoTask task) {
+        task.complete();
+        todoTaskRepo.update(task);
     }
 
     @Override
@@ -82,6 +83,36 @@ public class Service implements IService{
     @Override
     public TaskList getTaskList(RecentFile file) {
         return taskListRepo.searchTaskList(file.getId());
+    }
+
+    @Override
+    public void refreshTasks(List<TodoTask> tasks) {
+        for(TodoTask task : tasks){
+            if(!task.shouldRefresh())continue;
+            for(TodoSubtask subtask : task.getSubtasks()){
+                if (subtask.isShouldRepeat()){
+                    subtask.refresh();
+                    todoSubtaskRepo.update(subtask);
+                }
+            }
+            task.refresh();
+            todoTaskRepo.update(task);
+        }
+    }
+
+    @Override
+    public void removeTasks(List<TodoTask> tasks) {
+        for(TodoTask task : tasks)
+        {
+            for(TodoSubtask subtask : task.getSubtasks())
+                todoSubtaskRepo.delete(subtask.getId());
+            todoTaskRepo.delete(task.getId());
+        }
+    }
+
+    @Override
+    public void updateTaskList(TaskList taskList) {
+        taskListRepo.update(taskList);
     }
 
     @Override

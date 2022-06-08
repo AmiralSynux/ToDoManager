@@ -16,9 +16,15 @@ public interface IService {
 
     List<TodoTask> interpret(File file);
 
-    void complete(TaskList taskList);
+    void complete(TodoTask task);
 
     TaskList saveTaskList(TaskList list);
 
     TaskList getTaskList(RecentFile file);
+
+    void refreshTasks(List<TodoTask> tasks);
+
+    void removeTasks(List<TodoTask> tasks);
+
+    void updateTaskList(TaskList taskList);
 }

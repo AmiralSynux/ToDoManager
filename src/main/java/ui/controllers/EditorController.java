@@ -25,6 +25,7 @@ public class EditorController {
     private Stage current;
     private RecentFile file;
     private IService service;
+    private TaskList taskList;
     public void init(RecentFile file, Stage stage){
         try {
             recentText = Files.readString(file.getFile().toPath());
@@ -39,7 +40,11 @@ public class EditorController {
             e.printStackTrace();
             AlertHelper.showError(e);
         }
+    }
 
+    public void init(TaskList taskList, Stage stage){
+        this.taskList = taskList;
+        init(taskList.getFile(),stage);
     }
 
     @FXML
@@ -91,8 +96,18 @@ public class EditorController {
         }
         try{
             List<TodoTask> taskList = service.interpret(file.getFile());
-            TaskList list = new TaskList(file,taskList);
-            list = service.saveTaskList(list);
+            TaskList list;
+            if(this.taskList != null){
+                List<TodoTask> aux = this.taskList.getTasks();
+                this.taskList.setTasks(taskList);
+                service.updateTaskList(this.taskList);
+                service.removeTasks(aux);
+                list = this.taskList;
+            }
+            else{
+                list = new TaskList(file,taskList);
+                list = service.saveTaskList(list);
+            }
             current.setScene(SceneHelper.getTaskListScene(list, current));
         }catch (Exception e){
             AlertHelper.showError(e);

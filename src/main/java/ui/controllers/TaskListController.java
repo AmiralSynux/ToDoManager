@@ -3,9 +3,7 @@ package ui.controllers;
 import domain.RecentFile;
 import domain.TaskList;
 import domain.TodoTask;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import service.IService;
@@ -14,7 +12,6 @@ import ui.helper.AlertHelper;
 import ui.helper.SceneHelper;
 import ui.components.ToDoTaskItem;
 
-import java.util.List;
 
 public class TaskListController {
     @FXML
@@ -28,8 +25,10 @@ public class TaskListController {
         this.stage = stage;
         this.tasks = tasks;
         service = ServiceFactory.getService();
+        service.refreshTasks(tasks.getTasks());
         initList();
     }
+
 
     private void initList() {
         taskList.getItems().clear();
@@ -54,6 +53,16 @@ public class TaskListController {
             return;
         }
         TodoTask task = taskList.getSelectionModel().getSelectedItems().get(0).getTask();
+        try{
+            service.complete(task);
+            AlertHelper.showNotify("Task completed!");
+            initList();
+        }catch (Exception e){
+            AlertHelper.showError(e);
+        }
+    }
 
+    public void edit() {
+        stage.setScene(SceneHelper.getEditorScene(tasks,stage));
     }
 }
