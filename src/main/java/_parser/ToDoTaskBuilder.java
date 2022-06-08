@@ -4,6 +4,10 @@ import domain.TodoSubtask;
 import domain.TodoTask;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +68,8 @@ class ToDoTaskBuilder {
     }
 
     public void repeat(String str){
-        switch (str) {
+        String timestamp = str.split(" ")[1];
+        switch (timestamp) {
             case "daily" -> currentTask.set_interval(Duration.ofDays(1));
             case "weekly" -> currentTask.set_interval(Duration.ofDays(7));
             case "monthly" -> currentTask.set_interval(Duration.ofDays(30));
@@ -72,10 +77,36 @@ class ToDoTaskBuilder {
         }
     }
 
+    public void startAt(String str){
+        //#start at date
+        String date = str.split(" ")[2];
+        List<DateTimeFormatter> formatters = new ArrayList<>();
+        formatters.add(DateTimeFormatter.ofPattern("d/M/uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("dd/MM/uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("d\\M\\uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("dd\\MM\\uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("dd-MM-uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("d-M-uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("d.M.uuuu"));
+        formatters.add(DateTimeFormatter.ofPattern("dd.MM.uuuu"));
+        for(DateTimeFormatter formatter : formatters){
+            try {
+                LocalDateTime localDate = LocalDate.parse(date,formatter).atStartOfDay();
+                currentTask.setStartAt(localDate);
+                currentTask.setActive(false);
+                return;
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        throw new RuntimeException("Can't parse given date! The date: " + date + ". \n" +
+                "Please check the help button for approved formats!");
+    }
+
     public void repeatEvery(String str){
         String[] words = str.split(" ");
-        String number = words[1];
-        String timestamp = words[2];
+        String number = words[2];
+        String timestamp = words[3];
         try{
             long nr = Integer.parseInt(number);
             switch (timestamp) {

@@ -11,6 +11,7 @@ import repository.ITodoSubtaskRepo;
 import repository.ITodoTaskRepo;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Service implements IService{
@@ -88,6 +89,11 @@ public class Service implements IService{
     @Override
     public void refreshTasks(List<TodoTask> tasks) {
         for(TodoTask task : tasks){
+            if(task.getStartAt()!= null){
+                if(task.getStartAt().isBefore(LocalDateTime.now()))
+                    task.setActive(true);
+                continue;
+            }
             if(!task.shouldRefresh())continue;
             for(TodoSubtask subtask : task.getSubtasks()){
                 if (subtask.isShouldRepeat()){

@@ -1,0 +1,15 @@
+Save button: Saves the current text.
+Build button: Creates the task list out of the written text.
+Main Screen: Navigates back to the main screen.
+
+DSL Rules:
+
+"-" : Marks the start of a task / subtask
+"{" : Marks the start of the subtasks
+"}" : Marks the end of the subtasks
+#repeat : Marks the start of a repeating task. Must be used in combination with timestamps or with ever x timeunits.
+timestamps : "daily" , "weekly" , "monthly" , "yearly". Eg: #repeat daily
+timeunits : "hours" , "days" , "weeks" , "months" , "years". Eg: #repeat every 2 days
+#once : Marks a subtask as not repeatable
+#start at : Marks a task to start only at a certain date. Eg: #start at 6/8/2022
+Date formats: d/M/uuuu, dd/MM/uuuu, d\M\uuuu, dd\MM\uuuu, dd-MM-uuuu, d-M-uuuu, d.M.uuuu, dd.MM.uuuu

@@ -7,16 +7,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import service.IService;
 import service.ServiceFactory;
 import ui.helper.AlertHelper;
+import ui.helper.ImageHelper;
 import ui.helper.SceneHelper;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Scanner;
 
 public class EditorController {
     @FXML
@@ -67,9 +73,16 @@ public class EditorController {
 
     @FXML
     private void helpPressed() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"new project pressed", ButtonType.OK);
-        alert.setTitle("test");
-        alert.show();
+        try{
+            Scanner scanner = new Scanner(EditorController.class.getResource("/helpbtn.txt").openStream());
+            StringBuilder rules = new StringBuilder();
+            while (scanner.hasNext())
+                rules.append(scanner.nextLine() + "\n");
+            AlertHelper.showNotify(rules.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+            AlertHelper.showError("Missing dsl-rules!");
+        }
     }
 
     public void openMainScreen() {
