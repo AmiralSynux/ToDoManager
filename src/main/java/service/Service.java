@@ -91,7 +91,10 @@ public class Service implements IService{
         for(TodoTask task : tasks){
             if(task.getStartAt()!= null){
                 if(task.getStartAt().isBefore(LocalDateTime.now()))
+                {
                     task.setActive(true);
+                    todoTaskRepo.update(task);
+                }
                 continue;
             }
             if(!task.shouldRefresh())continue;
