@@ -3,33 +3,43 @@ import java_cup.runtime.*;
 
 terminal StartTask, StartSubtasks, EndSubtasks, OnlyOnce;
 terminal String Word, OneWordRepeat, RepeatEvery, StartAt;
-non terminal taskList, description, descriptionSubtask, task, subtaskList, subtasks, subtask,
+non terminal taskList, description, descriptionSubtask, task,
+subtaskList, subtasks, subtask,
 words, repeating, wordsSubtask;
 
 start with taskList;
 
-taskList ::= taskList task {:MyParser.getBuilder().startBuilding();:} |
-             task {:MyParser.getBuilder().startBuilding();:};
+taskList ::= taskList
+        task {:MyParser.getBuilder().startBuilding();:} |
+        task {:MyParser.getBuilder().startBuilding();:};
 
 task ::= StartTask description |
-            StartTask description subtaskList;
+         StartTask description subtaskList;
 
 description ::= description words | words;
 
-words ::= Word:e {:MyParser.getBuilder().addDescription(e);:} | repeating;
+words ::= Word:e
+          {:MyParser.getBuilder().addDescription(e);:} |
+          repeating;
 
-repeating ::= OneWordRepeat:r {:MyParser.getBuilder().repeat(r);:} |
-        RepeatEvery:r {:MyParser.getBuilder().repeatEvery(r);:} |
-        StartAt:r {:MyParser.getBuilder().startAt(r);:};
+repeating ::= OneWordRepeat:r
+    {:MyParser.getBuilder().repeat(r);:} |
+    RepeatEvery:r {:MyParser.getBuilder().repeatEvery(r);:} |
+    StartAt:r {:MyParser.getBuilder().startAt(r);:};
 
-subtaskList ::= StartSubtasks {:MyParser.getBuilder().startSubtasks();:} subtasks EndSubtasks;
+subtaskList ::= StartSubtasks
+                {:MyParser.getBuilder().startSubtasks();:}
+                subtasks EndSubtasks;
 
 subtasks ::= subtasks subtask | subtask;
 
-subtask ::= StartTask descriptionSubtask {:MyParser.getBuilder().buildSubtask();:};
+subtask ::= StartTask descriptionSubtask
+            {:MyParser.getBuilder().buildSubtask();:};
 
-descriptionSubtask ::= descriptionSubtask wordsSubtask | wordsSubtask;
+descriptionSubtask ::= descriptionSubtask wordsSubtask |
+                       wordsSubtask;
 
-wordsSubtask ::= Word:e {:MyParser.getBuilder().addSubtaskDescription(e);:} |
+wordsSubtask ::= Word:e
+        {:MyParser.getBuilder().addSubtaskDescription(e);:} |
         OnlyOnce {:MyParser.getBuilder().onlyOnce();:};
 
