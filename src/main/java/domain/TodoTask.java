@@ -45,6 +45,7 @@ public class TodoTask extends Entity{
 
     public boolean shouldRefresh(){
         if(completedOn == null) return false;
+        if(_interval == null) return false;
         return !completedOn.plus(_interval).isAfter(LocalDateTime.now());
     }
 

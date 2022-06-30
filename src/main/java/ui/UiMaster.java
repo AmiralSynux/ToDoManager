@@ -32,6 +32,7 @@ public class UiMaster extends Application {
         catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we had troubles building the SessionFactory
             // so destroy it manually.
+            e.printStackTrace();
             System.out.println(e.getMessage());
             StandardServiceRegistryBuilder.destroy( registry );
         }

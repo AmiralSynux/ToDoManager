@@ -2,6 +2,7 @@ package _parser;
 
 import domain.TodoSubtask;
 import domain.TodoTask;
+import domain.validators.ValidationException;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -99,7 +100,7 @@ class ToDoTaskBuilder {
                 System.out.println(e.getMessage());
             }
         }
-        throw new RuntimeException("Can't parse given date! The date: " + date + ". \n" +
+        throw new ValidationException("Can't parse given date! The date: " + date + ". \n" +
                 "Please check the help button for approved formats!");
     }
 

@@ -19,6 +19,7 @@ import ui.helper.SceneHelper;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,9 +43,13 @@ public class EditorController {
             this.file = file;
             this.current = stage;
             current.setTitle(SceneHelper.getMainTitle() + " - " + file.getName());
-        } catch (IOException e) {
+        }catch (NoSuchFileException e){
+            throw new RuntimeException("Missing file!\nThis file is missing or has been renamed: " + e.getMessage());
+        }
+        catch (IOException e) {
             e.printStackTrace();
             AlertHelper.showError(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 

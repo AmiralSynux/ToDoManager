@@ -14,6 +14,7 @@ public class AlertHelper {
     public static void showError(String error){
         System.out.println(error);
         Alert alert = new Alert(Alert.AlertType.ERROR,error, ButtonType.OK);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setHeaderText(null);
         alert.show();
     }

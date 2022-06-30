@@ -5,6 +5,7 @@ import domain.RecentFile;
 import domain.TaskList;
 import domain.TodoSubtask;
 import domain.TodoTask;
+import domain.validators.ValidationException;
 import repository.IRecentFileRepo;
 import repository.ITaskListRepo;
 import repository.ITodoSubtaskRepo;
@@ -62,8 +63,11 @@ public class Service implements IService{
         MyParser parser = new MyParser(file);
         try {
             parser.parse();
-        }catch (Exception e){
+        }catch (ValidationException e){
             throw new RuntimeException("Unable to interpret file!\n" + e.getMessage());
+        }
+        catch (Exception e){
+            throw new RuntimeException("Unable to interpret file!\n Please use ' '(space) between the special chars('{','}','-')!");
         }
         return parser.getTasks();
     }

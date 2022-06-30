@@ -36,6 +36,10 @@ public class TaskListController {
             if(task.isActive())
                 taskList.getItems().add(new ToDoTaskItem(task));
         }
+        for (TodoTask task : tasks.getTasks()){
+            if(!task.isActive())
+                taskList.getItems().add(new ToDoTaskItem(task));
+        }
     }
 
     @FXML
@@ -63,6 +67,10 @@ public class TaskListController {
     }
 
     public void edit() {
-        stage.setScene(SceneHelper.getEditorScene(tasks,stage));
+        try{
+            stage.setScene(SceneHelper.getEditorScene(tasks,stage));
+        }catch (Exception e){
+            AlertHelper.showError(e);
+        }
     }
 }

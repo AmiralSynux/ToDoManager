@@ -26,6 +26,7 @@ public class SceneHelper {
             controller.init(taskList, stage);
             return scene;
         }catch (Exception e){
+            e.printStackTrace();
             System.out.println(e.getMessage());
             throw new RuntimeException("Error while loading scene!");
         }

@@ -19,13 +19,21 @@ public class ToDoTaskItem extends HBox {
         {
             VBox container = new VBox();
             container.getChildren().add(ImageHelper.getImage(ImageHelper.Images.Redo));
-            Text text = new Text(task.get_interval().toHours()+" hours");
+            long hours = task.get_interval().toHours();
+            Text text;
+            if(hours % 24 == 0 && hours > 24)
+                text = new Text(hours/24+" days");
+            else
+                text = new Text(hours + " hours");
             text.setFont(Font.font(10));
             container.getChildren().add(text);
             container.setAlignment(Pos.CENTER);
             this.getChildren().add(container);
         }
         this.setAlignment(Pos.CENTER_LEFT);
+        if(!task.isActive()){
+            this.setOpacity(0.3);
+        }
     }
 
     private VBox buildTask(){
