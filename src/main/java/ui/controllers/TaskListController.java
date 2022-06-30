@@ -57,6 +57,10 @@ public class TaskListController {
             return;
         }
         TodoTask task = taskList.getSelectionModel().getSelectedItems().get(0).getTask();
+        if(!task.isActive()){
+            AlertHelper.showError("The selected task is not active!");
+            return;
+        }
         try{
             service.complete(task);
             AlertHelper.showNotify("Task completed!");
